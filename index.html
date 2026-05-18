@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MP Academic Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#f7f4ef; --cream-dark:#ede9e2; --ink:#1c1c1c; --ink-soft:#3d3d3d;
+    --ink-muted:#6b6b6b; --rule:#d4cfc8; --accent:#3a5a6e; --accent-light:#e8eef1;
+    --white:#ffffff; --serif:'Cormorant Garamond',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  nav{position:sticky;top:0;z-index:100;background:var(--cream);border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,5vw,4rem);height:60px}
+  .nav-brand{font-family:var(--serif);font-size:1.1rem;font-weight:500;letter-spacing:.01em;color:var(--ink);cursor:pointer}
+  .nav-tabs{display:flex;list-style:none}
+  .nav-tab{font-family:var(--sans);font-size:.8rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);padding:0 1.25rem;height:60px;display:flex;align-items:center;cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap}
+  .nav-tab:hover{color:var(--ink)}
+  .nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:500}
+  .page{display:none}.page.active{display:block}
+  .container{max-width:900px;margin:0 auto;padding:0 clamp(1.5rem,5vw,4rem)}
+  section{padding:clamp(3rem,6vw,5rem) 0}
+  section+section{border-top:1px solid var(--rule)}
+  h1{font-family:var(--serif);font-size:clamp(2.8rem,6vw,4.5rem);font-weight:300;line-height:1.1;letter-spacing:-.01em;color:var(--ink)}
+  h2{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;line-height:1.2;color:var(--ink);margin-bottom:1.25rem}
+  h3{font-family:var(--serif);font-size:1.4rem;font-weight:500;line-height:1.3;color:var(--ink);margin-bottom:.6rem}
+  h4{font-family:var(--sans);font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+  p{color:var(--ink-soft);margin-bottom:1rem;max-width:65ch}
+  p:last-child{margin-bottom:0}
+  .hero{padding:clamp(4rem,10vw,7rem) 0 clamp(3rem,6vw,5rem);border-bottom:1px solid var(--rule)}
+  .hero-eyebrow{font-family:var(--sans);font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem}
+  .hero h1{margin-bottom:1.75rem}
+  .hero-lead{font-size:1.1rem;line-height:1.8;color:var(--ink-soft);max-width:58ch}
+  .audience-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:2rem}
+  .audience-item{background:var(--cream);padding:1.75rem}
+  .audience-item h3{font-size:1.1rem;margin-bottom:.5rem}
+  .audience-item p{font-size:.9rem;line-height:1.6;margin-bottom:0}
+  .service-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2.5rem}
+  .service-card{background:var(--white);border:1px solid var(--rule);padding:2rem;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+  .service-card:hover{border-color:var(--accent);box-shadow:0 4px 24px rgba(58,90,110,.08)}
+  .service-card-number{font-family:var(--serif);font-size:3rem;font-weight:300;color:var(--cream-dark);line-height:1;margin-bottom:1rem}
+  .service-card h3{font-size:1.25rem;margin-bottom:.75rem}
+  .service-card p{font-size:.9rem;line-height:1.65;color:var(--ink-muted)}
+  .service-card-link{display:inline-block;margin-top:1.25rem;font-size:.78rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+  .pricing-table{width:100%;border-collapse:collapse;margin-top:2rem;font-size:.9rem}
+  .pricing-table thead tr{border-bottom:2px solid var(--ink)}
+  .pricing-table th{font-family:var(--sans);font-size:.72rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-muted);padding:0 1.5rem .85rem 0;text-align:left}
+  .pricing-table td{padding:1.1rem 1.5rem 1.1rem 0;color:var(--ink-soft);border-bottom:1px solid var(--rule);vertical-align:top}
+  .pricing-table td:first-child{font-family:var(--serif);font-size:1.05rem;font-weight:500;color:var(--ink)}
+  .pricing-table tr.rush-row td{background:var(--accent-light);font-size:.85rem;color:var(--ink-muted);padding-top:.65rem;padding-bottom:.65rem}
+  .pricing-table tr.rush-row td:first-child{font-family:var(--sans);font-size:.85rem;font-weight:400;color:var(--ink-muted);padding-left:1rem}
+  .rate-value{font-weight:500;color:var(--ink)}
+  .pricing-note{font-size:.82rem;color:var(--ink-muted);margin-top:1.25rem;font-style:italic}
+  .offer-block{background:var(--accent-light);border:1px solid #c5d5de;padding:1.75rem 2rem;margin-top:2rem;display:flex;gap:1.25rem;align-items:flex-start}
+  .offer-icon{font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--accent);line-height:1;min-width:1.5rem}
+  .offer-block h3{font-size:1.1rem;margin-bottom:.4rem;color:var(--accent)}
+  .offer-block p{font-size:.9rem;color:var(--ink-soft);margin-bottom:0}
+  .testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:2.5rem}
+  .testimonial{background:var(--white);padding:2rem}
+  .testimonial-quote{font-family:var(--serif);font-size:1.08rem;font-weight:400;font-style:italic;line-height:1.7;color:var(--ink);margin-bottom:1.5rem}
+  .testimonial-quote::before{content:'\201C';font-size:2.5rem;line-height:0;vertical-align:-.5rem;color:var(--accent);margin-right:.1rem;font-style:normal}
+  .testimonial-attr{font-family:var(--sans);font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);border-top:1px solid var(--rule);padding-top:1rem}
+  .confidentiality-note{display:flex;gap:.75rem;align-items:flex-start;padding:1.1rem 1.5rem;border:1px solid var(--rule);background:var(--cream);margin-top:1.5rem}
+  .confidentiality-note p{font-size:.85rem;color:var(--ink-muted);margin-bottom:0}
+  .confidentiality-note p strong{color:var(--ink-soft)}
+  .about-block{display:grid;grid-template-columns:220px 1fr;gap:3rem;align-items:start;margin-top:2.5rem}
+  @media(max-width:640px){.about-block{grid-template-columns:1fr;gap:2rem}}
+  .about-photo{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center top;filter:grayscale(15%)}
+  .about-stat-row{display:flex;gap:2.5rem;margin-top:1.75rem;padding-top:1.75rem;border-top:1px solid var(--rule);flex-wrap:wrap}
+  .about-stat{display:flex;flex-direction:column;gap:.2rem}
+  .about-stat-num{font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--ink);line-height:1}
+  .about-stat-label{font-family:var(--sans);font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+  .referral-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:2rem}
+  @media(max-width:600px){.referral-grid{grid-template-columns:1fr}}
+  .referral-card{background:var(--white);padding:2rem}
+  .referral-card-label{font-family:var(--sans);font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem}
+  .referral-card-discount{font-family:var(--serif);font-size:3.2rem;font-weight:300;color:var(--ink);line-height:1;margin-bottom:.75rem}
+  .referral-card h3{font-size:1.15rem;margin-bottom:.5rem}
+  .referral-card p{font-size:.88rem;line-height:1.6;color:var(--ink-muted);margin-bottom:0}
+  .referral-terms{background:var(--cream-dark);padding:1.25rem 1.75rem;margin-top:1px;border:1px solid var(--rule);border-top:none}
+  .referral-terms p{font-size:.82rem;color:var(--ink-muted);margin-bottom:0}
+  .contact-block{background:var(--accent);padding:clamp(2.5rem,5vw,4rem);margin-top:2.5rem}
+  .contact-block h2{color:var(--white);margin-bottom:.75rem}
+  .contact-block p{color:rgba(255,255,255,.8);margin-bottom:1.5rem}
+  .contact-email{display:inline-block;font-family:var(--sans);font-size:1rem;font-weight:500;color:var(--white);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.5);padding-bottom:2px;transition:border-color .2s}
+  .contact-email:hover{border-color:white}
+  .page-hero{padding:clamp(3rem,7vw,5.5rem) 0 clamp(2rem,4vw,3.5rem);border-bottom:1px solid var(--rule)}
+  .page-hero h1{font-size:clamp(2.2rem,5vw,3.6rem);margin-bottom:1rem}
+  .page-hero p{font-size:1.05rem;line-height:1.8;max-width:58ch}
+  .checklist{list-style:none;margin-top:1.25rem;display:flex;flex-direction:column;gap:.6rem}
+  .checklist li{display:flex;align-items:flex-start;gap:.75rem;font-size:.92rem;color:var(--ink-soft);line-height:1.5}
+  .checklist li::before{content:'';display:block;width:18px;height:18px;min-width:18px;border:1.5px solid var(--accent);border-radius:2px;margin-top:1px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%233a5a6e' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/10px no-repeat,var(--accent-light)}
+  .steps{margin-top:2rem;display:flex;flex-direction:column;gap:0}
+  .step{display:grid;grid-template-columns:3rem 1fr;gap:1.25rem;padding:1.5rem 0;border-bottom:1px solid var(--rule)}
+  .step:first-child{padding-top:0}.step:last-child{border-bottom:none}
+  .step-num{font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--accent);line-height:1.1}
+  .step h3{font-size:1.1rem;margin-bottom:.4rem}.step p{font-size:.9rem;margin-bottom:0}
+  .scope-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:1.5rem}
+  @media(max-width:600px){.scope-grid{grid-template-columns:1fr}}
+  .scope-box{background:var(--cream);padding:1.75rem}
+  .scope-box.included{background:var(--accent-light)}
+  .scope-box h4{margin-bottom:1rem}
+  .scope-box.included h4{color:var(--accent)}
+  .scope-box:not(.included) h4{color:var(--ink-muted)}
+  .scope-list{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+  .scope-list li{font-size:.88rem;color:var(--ink-soft);line-height:1.5;padding-left:1.1rem;position:relative}
+  .scope-list li::before{content:'';position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+  .scope-box:not(.included) .scope-list li::before{background:var(--ink-muted)}
+  .delivery-note{background:var(--cream-dark);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin-top:2rem}
+  .delivery-note p{font-size:.9rem;color:var(--ink-soft);margin-bottom:0}
+  .delivery-note strong{color:var(--ink)}
+  .style-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+  .style-pill{font-family:var(--sans);font-size:.75rem;font-weight:500;letter-spacing:.05em;background:var(--white);border:1px solid var(--rule);color:var(--ink-soft);padding:.3rem .8rem;border-radius:2px}
+  footer{border-top:1px solid var(--rule);padding:2rem 0;font-size:.8rem;color:var(--ink-muted)}
+  .back-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-muted);cursor:pointer;margin-bottom:2rem;margin-top:1.5rem;transition:color .2s}
+  .back-link:hover{color:var(--accent)}
+  @media(max-width:640px){
+    .nav-tab{padding:0 .7rem;font-size:.72rem}
+    .nav-brand{font-size:.95rem}
+    .service-grid,.testimonial-grid{grid-template-columns:1fr}
+    .pricing-table{font-size:.82rem}
+    .pricing-table td,.pricing-table th{padding-right:.75rem}
+    .offer-block{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <span class="nav-brand" onclick="showPage('home')">Academic Services</span>
+  <ul class="nav-tabs">
+    <li class="nav-tab active" onclick="showPage('home')" id="tab-home">Overview</li>
+    <li class="nav-tab" onclick="showPage('writing')" id="tab-writing">Academic Writing</li>
+    <li class="nav-tab" onclick="showPage('developmental')" id="tab-developmental">Developmental Editing</li>
+    <li class="nav-tab" onclick="showPage('proofreading')" id="tab-proofreading">Proofreading</li>
+    <li class="nav-tab" onclick="showPage('about')" id="tab-about">About</li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="container">
+      <p class="hero-eyebrow">Academic Writing &amp; Editing Services &mdash; Social Sciences</p>
+      <h1>Your research<br><em>deserves to be read.</em></h1>
+      <p class="hero-lead">Rigorous research and clear writing are different skills. Strong studies get rejected because the manuscript fails to communicate the work, not because the work is weak. These services exist to close that gap, for researchers, faculty, and graduate students in the social sciences.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h4>Who this is for</h4>
+      <h2>Social scientists, researchers,<br>and graduate students</h2>
+      <p>Primary fields: business, management, marketing, and leadership, with adjacent areas in organizational studies, strategy, and applied social research.</p>
+      <div class="audience-grid">
+        <div class="audience-item">
+          <h3>Researchers &amp; Faculty</h3>
+          <p>Preparing journal articles, literature reviews, book chapters, or grant proposals. Reviewers read under no obligation to give you the benefit of the doubt. The manuscript needs to make the case clearly.</p>
+        </div>
+        <div class="audience-item">
+          <h3>Graduate Students</h3>
+          <p>Working on theses, dissertations, or seminar papers. The content is yours. The challenge is getting the structure, argument, and language to the standard your committee expects.</p>
+        </div>
+        <div class="audience-item">
+          <h3>Non-native English Writers</h3>
+          <p>Your research is sound. These services close the gap between the work you have done and the precision English-language journals require, without altering your argument or voice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h4>Services</h4>
+      <h2>Three ways to work together</h2>
+      <div class="service-grid">
+        <div class="service-card" onclick="showPage('writing')">
+          <div class="service-card-number">01</div>
+          <h3>Academic Writing</h3>
+          <p>You have the research and the sources. The manuscript needs to be written. This service produces a complete draft from your secondary materials: journal articles, literature reviews, and thesis chapters in business, management, marketing, and leadership.</p>
+          <span class="service-card-link">Learn more</span>
+        </div>
+        <div class="service-card" onclick="showPage('developmental')">
+          <div class="service-card-number">02</div>
+          <h3>Developmental Editing</h3>
+          <p>You have a complete draft but something is not working: the argument is hard to follow, the structure feels off, or reviewers keep flagging the same section. Delivered as prioritised Word comments with specific recommendations.</p>
+          <span class="service-card-link">Learn more</span>
+        </div>
+        <div class="service-card" onclick="showPage('proofreading')">
+          <div class="service-card-number">03</div>
+          <h3>Proofreading</h3>
+          <p>The paper is ready to submit. A final pass catches spelling, grammar, punctuation, citation format, and internal consistency errors. Delivered as tracked changes in Word. New clients receive the first 1,000 words free.</p>
+          <span class="service-card-link">Learn more</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h4>How the services fit together</h4>
+      <h2>Each service has its moment</h2>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><h3>Academic Writing</h3><p>Produces a draft from your research and sources. Use when you have the material but not the manuscript.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h3>Developmental Editing</h3><p>Examines argument, structure, and flow. Runs on a complete draft, before proofreading, so no corrections are made on text that may still change.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h3>Proofreading</h3><p>The final pass. Runs once content and structure are settled.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h4>From past clients</h4>
+      <h2>What researchers say</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial">
+          <p class="testimonial-quote">I submitted my thesis chapter with real confidence for the first time. The developmental feedback identified a structural problem I had been circling for months but could not name. Once it was named, the fix was straightforward.</p>
+          <div class="testimonial-attr">PhD Candidate, Management<br>Central European University</div>
+        </div>
+        <div class="testimonial">
+          <p class="testimonial-quote">As an editor, I can tell immediately when a manuscript has been properly proofread versus run through software. The citations were clean, the internal consistency was solid, and it came back with comments where a human judgment call was needed. That is rare.</p>
+          <div class="testimonial-attr">Associate Editor<br>Journal of Business Research</div>
+        </div>
+        <div class="testimonial">
+          <p class="testimonial-quote">English is my third language and I was spending as much time on the writing as on the research itself. Having a paper written from my notes and then revised to my feedback gave me back several weeks I needed for the empirical work.</p>
+          <div class="testimonial-attr">Senior Researcher, Marketing Strategy<br>University of Vienna</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h4>Colleague Referral Programme</h4>
+      <h2>Recommend a colleague.<br>Both of you benefit.</h2>
+      <p>If a colleague you refer completes a paid project, you receive 20% off your next order. They receive 10% off their first. They mention your name when they get in touch. That is all there is to it.</p>
+      <p>Discounts accumulate: each referral earns 20% off one future order. The maximum discount on any single order is 40%.</p>
+      <div class="referral-grid">
+        <div class="referral-card">
+          <div class="referral-card-label">For you, when you refer</div>
+          <div class="referral-card-discount">20%</div>
+          <h3>Off your next order</h3>
+          <p>One 20% discount per successful referral. Refer two colleagues, get 20% off each of your next two orders.</p>
+        </div>
+        <div class="referral-card">
+          <div class="referral-card-label">For your colleague, on arrival</div>
+          <div class="referral-card-discount">10%</div>
+          <h3>Off their first order</h3>
+          <p>Your colleague receives 10% off their first completed project. They mention your name when they contact me.</p>
+        </div>
+      </div>
+      <div class="referral-terms">
+        <p>Referral discounts are valid for 6 months from the date the referred client completes their first paid project. The maximum discount on any single order is 40%.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h4>Pricing</h4>
+      <h2>Per-word rates, no ambiguity</h2>
+      <p>All services are charged per word of finished text. You know the total cost before work begins. Rates are in EUR; USD and GBP equivalents are available on request.</p>
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>Service</th><th>Rate per word</th><th>Example: 4,000 words</th><th>Typical turnaround</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Proofreading</td>
+            <td><span class="rate-value">&euro;0.025</span></td>
+            <td>&euro;100</td>
+            <td>3&ndash;5 business days</td>
+          </tr>
+          <tr class="rush-row">
+            <td>&#8627;&nbsp;Rush proofreading (48h)</td>
+            <td><span class="rate-value">&euro;0.05</span></td>
+            <td>&euro;200</td>
+            <td>48 hours</td>
+          </tr>
+          <tr>
+            <td>Developmental Editing</td>
+            <td><span class="rate-value">&euro;0.075</span></td>
+            <td>&euro;300</td>
+            <td>5&ndash;8 business days</td>
+          </tr>
+          <tr>
+            <td>Academic Writing</td>
+            <td><span class="rate-value">&euro;0.25</span></td>
+            <td>&euro;1,000</td>
+            <td>Agreed per project</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="pricing-note">Discounts available for thesis and dissertation projects over 20,000 words. All projects are quoted individually before work begins.</p>
+      <div class="offer-block">
+        <div class="offer-icon">&#8594;</div>
+        <div>
+          <h3>New clients: first 1,000 words proofread free</h3>
+          <p>If you have not worked with me before, send your manuscript and I will proofread the first 1,000 words at no charge. No commitment required. It is the fastest way to see the quality and depth of the work before you decide on a full project.</p>
+        </div>
+      </div>
+      <div class="confidentiality-note">
+        <p><strong>Confidentiality:</strong> All materials submitted are treated with standard professional discretion. No client work or content is shared with third parties under any circumstances.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="contact-block">
+        <h2>Get in touch</h2>
+        <p>Send a brief note describing your project, where you are in the process, and your timeline. I will confirm the right service and provide a quote before anything begins.</p>
+        <a class="contact-email" href="mailto:martin.s.petkov@gmail.com">martin.s.petkov@gmail.com</a>
+      </div>
+    </div>
+  </section>
+  <footer><div class="container">MP Academic Services &nbsp;&middot;&nbsp; Social Sciences &nbsp;&middot;&nbsp; martin.s.petkov@gmail.com</div></footer>
+</div>
+
+<!-- WRITING -->
+<div id="page-writing" class="page">
+  <section class="page-hero">
+    <div class="container">
+      <span class="back-link" onclick="showPage('home')">&larr; Back to overview</span>
+      <h4>Service 01</h4>
+      <h1>Academic Writing</h1>
+      <p>For when you have done the research but need the manuscript written. This service produces a complete, well-argued paper from your secondary sources, notes, and materials. Primary fields: business, management, marketing, and leadership, and adjacent areas in organizational studies, strategy, and applied social research.</p>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <h4>What this service covers</h4>
+      <h2>Writing from your material,<br>not from scratch</h2>
+      <p>The core challenge in social science writing is not collecting information: it is turning a body of research into a coherent argument. You bring the material. This service builds the manuscript around it.</p>
+      <p>Depending on what you provide, this can mean writing a paper from existing notes and sources, drafting specific sections where you are stuck, or organizing a collection of evidence into a structure that holds together under scrutiny.</p>
+      <div class="steps" style="margin-top:2.5rem">
+        <div class="step"><div class="step-num">01</div><div><h3>Scoping the project</h3><p>Before any writing begins, we establish the research question or argument, the paper type, the target venue if applicable, and the secondary sources you are working from. This determines the structure and sets the scope.</p></div></div>
+        <div class="step"><div class="step-num">02</div><div><h3>Reviewing and organising the literature</h3><p>I work through the sources you provide, identifying the relevant threads, mapping the existing scholarship, and establishing where your argument sits within it. For papers requiring a literature review section, this becomes its foundation.</p></div></div>
+        <div class="step"><div class="step-num">03</div><div><h3>Structuring the argument</h3><p>A paper that cannot be outlined clearly cannot be written well. Before drafting begins, we agree on a structure: the sections, the sequence, and what each part needs to establish for the argument to hold together. If you have an existing outline, this is where we refine it.</p></div></div>
+        <div class="step"><div class="step-num">04</div><div><h3>Writing the draft</h3><p>I write to the agreed structure using your notes and sources. The draft follows the conventions of social science writing: appropriate citation style, measured claims, evidence-backed reasoning. The voice is scholarly, not generic.</p></div></div>
+        <div class="step"><div class="step-num">05</div><div><h3>Revision rounds</h3><p>You review the draft and provide feedback. Two revision rounds are included as standard: one for structural or content changes, one for final refinements. Additional rounds can be arranged if needed.</p></div></div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <h4>Scope</h4>
+      <h2>What this includes,<br>and what it does not</h2>
+      <p>This service works entirely from secondary sources: published research, existing data, your notes, and materials you provide. It does not include primary research of any kind.</p>
+      <div class="scope-grid">
+        <div class="scope-box included">
+          <h4>Included</h4>
+          <ul class="scope-list">
+            <li>Literature review and secondary source analysis</li>
+            <li>Argument development and structure</li>
+            <li>Full manuscript drafting from your notes and sources</li>
+            <li>Section-by-section drafting if you only need part of the paper</li>
+            <li>Introduction and conclusion writing</li>
+            <li>Abstract writing</li>
+            <li>Citation formatting in your required style</li>
+            <li>Two revision rounds as standard</li>
+          </ul>
+        </div>
+        <div class="scope-box">
+          <h4>Not included</h4>
+          <ul class="scope-list">
+            <li>Primary research of any kind: data collection, fieldwork, surveys, interviews</li>
+            <li>Statistical analysis or interpretation beyond what you provide</li>
+            <li>Work your institution requires you to produce independently</li>
+            <li>Source procurement: I work from what you supply</li>
+          </ul>
+        </div>
+      </div>
+      <div class="delivery-note">
+        <p><strong>Rate: &euro;0.25 per word of finished draft.</strong> All projects are quoted individually before work begins. Send a description of the paper, your target venue, the sources you are working from, any notes you have, and your deadline.</p>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="contact-block">
+        <h2>Start a project</h2>
+        <p>Describe your paper, what you have so far, and when you need it. I will confirm the scope, timeline, and rate before we begin.</p>
+        <a class="contact-email" href="mailto:martin.s.petkov@gmail.com">martin.s.petkov@gmail.com</a>
+      </div>
+    </div>
+  </section>
+  <footer><div class="container">Academic Writing &amp; Editing Services &nbsp;&middot;&nbsp; martin.s.petkov@gmail.com</div></footer>
+</div>
+
+<!-- DEVELOPMENTAL -->
+<div id="page-developmental" class="page">
+  <section class="page-hero">
+    <div class="container">
+      <span class="back-link" onclick="showPage('home')">&larr; Back to overview</span>
+      <h4>Service 02</h4>
+      <h1>Developmental Editing</h1>
+      <p>A rigorous structural review of a complete draft. For papers where the research is sound but the argument is not landing: the logic has gaps, the structure makes reviewers work too hard, or the thesis gets lost somewhere in the middle.</p>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <h4>Why papers get rejected</h4>
+      <h2>Most rejection is a structure problem,<br>not a science problem</h2>
+      <p>Peer reviewers are reading quickly and under cognitive load. A manuscript that requires effort to follow does not get the benefit of the doubt. Arguments that are buried, transitions that are missing, sections that repeat earlier content, claims without adequate support: these are fixable problems, but only if you can identify them before submission.</p>
+      <p>Developmental editing examines the draft at the architectural level, before you polish the language. It finds the issues that matter most and tells you precisely what to do about them.</p>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <h4>What gets examined</h4>
+      <h2>Seven dimensions of academic structure</h2>
+      <p>Every manuscript is assessed against seven structural criteria. Each finding is prioritized so you know where to spend your revision time.</p>
+      <div class="steps" style="margin-top:2rem">
+        <div class="step"><div class="step-num">D1</div><div><h3>Thesis and central argument</h3><p>Is the central claim stated clearly and early enough? Is it specific enough to be meaningfully defended? Does the paper deliver on what the thesis promises, or does the argument drift? Does the conclusion return to the thesis in light of the evidence?</p></div></div>
+        <div class="step"><div class="step-num">D2</div><div><h3>Section structure and sequencing</h3><p>Does the structure fit the paper type: IMRaD, literature review, theoretical, case study, policy brief? Are sections in a logical order, each building on what came before? Does the Introduction establish background, gap, and contribution? Does the Conclusion do more than restate?</p></div></div>
+        <div class="step"><div class="step-num">D3</div><div><h3>Argument logic and evidence chain</h3><p>Does each major claim have adequate support? Are there gaps where a conclusion does not follow from the evidence? Are counter-arguments acknowledged where a reviewer would expect them? Does the Discussion interpret findings, or does it simply repeat the Results?</p></div></div>
+        <div class="step"><div class="step-num">D4</div><div><h3>Paragraph-level organization</h3><p>Does each paragraph have one clear controlling idea? Does content stay on topic or drift? Are paragraphs in a sequence that builds logically? Are any so long they should be split, or so short they should be merged?</p></div></div>
+        <div class="step"><div class="step-num">D5</div><div><h3>Transitions and flow</h3><p>Do section-to-section transitions signal the relationship between ideas, or does the reader need to guess? Do they do real work, or are they generic filler? Can a careful reader follow the logic from Introduction to Conclusion without losing the thread?</p></div></div>
+        <div class="step"><div class="step-num">D6</div><div><h3>Scope and balance</h3><p>Is the Introduction proportionate to the rest of the paper? Is the Literature Review balanced across the field, or does it favour sources that support the conclusion? Is the Methods section detailed enough to allow replication? Is the Discussion proportionate to the Results?</p></div></div>
+        <div class="step"><div class="step-num">D7</div><div><h3>Conceptual clarity</h3><p>Are key terms defined at first use and used consistently? Is jargon deployed purposefully, or is it obscuring the argument? Are figures and tables integrated into the argument, or floating separately without adequate interpretation?</p></div></div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <h4>Delivery</h4>
+      <h2>Comments in Word, ranked by priority</h2>
+      <p>Developmental editing does not touch your text. It annotates it. Every finding is inserted as a native Word reviewer comment, anchored to the relevant section or paragraph. You read each comment in context and decide how to act on it.</p>
+      <ul class="checklist" style="margin-top:1.5rem">
+        <li>A summary comment at the start of the document lists all findings by priority before you reach the individual annotations</li>
+        <li>Critical issues, which prevent the paper from achieving its purpose, appear first</li>
+        <li>Major issues, which reviewers are likely to flag, appear second</li>
+        <li>Minor issues, noticeable to careful readers, appear third</li>
+        <li>Each comment includes a specific observation and a specific, actionable recommendation</li>
+        <li>No text is rewritten: the revision decisions and the writing remain yours</li>
+      </ul>
+      <div class="delivery-note">
+        <p><strong>Rate: &euro;0.075 per word. Requires a complete draft.</strong> Developmental editing cannot assess argument structure or section balance from a partial manuscript. Submit the full paper before this service runs. If the draft is still in progress, academic writing may be the better starting point.</p>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <h4>Scope</h4>
+      <h2>Structure and argument only</h2>
+      <div class="scope-grid">
+        <div class="scope-box included">
+          <h4>In scope</h4>
+          <ul class="scope-list">
+            <li>Thesis clarity and placement</li>
+            <li>Section structure and sequencing</li>
+            <li>Argument logic and evidence chain</li>
+            <li>Paragraph organization and topic sentences</li>
+            <li>Transitions between sections and paragraphs</li>
+            <li>Scope and section balance</li>
+            <li>Conceptual clarity and term consistency</li>
+            <li>Integration of figures and tables into the argument</li>
+          </ul>
+        </div>
+        <div class="scope-box">
+          <h4>Out of scope</h4>
+          <ul class="scope-list">
+            <li>Spelling, grammar, and punctuation</li>
+            <li>Citation format compliance</li>
+            <li>Sentence-level rewriting</li>
+            <li>Methodological validity or scientific accuracy</li>
+            <li>Statistical review</li>
+          </ul>
+          <p style="font-size:.82rem;margin-top:1rem;color:var(--ink-muted)">Surface corrections belong to proofreading. Run developmental editing first, then proofread the revised manuscript.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="contact-block">
+        <h2>Send your draft</h2>
+        <p>Share the manuscript, your target journal or venue, and any specific concerns about the argument or structure. I will confirm scope and turnaround.</p>
+        <a class="contact-email" href="mailto:martin.s.petkov@gmail.com">martin.s.petkov@gmail.com</a>
+      </div>
+    </div>
+  </section>
+  <footer><div class="container">Academic Writing &amp; Editing Services &nbsp;&middot;&nbsp; martin.s.petkov@gmail.com</div></footer>
+</div>
+
+<!-- PROOFREADING -->
+<div id="page-proofreading" class="page">
+  <section class="page-hero">
+    <div class="container">
+      <span class="back-link" onclick="showPage('home')">&larr; Back to overview</span>
+      <h4>Service 03</h4>
+      <h1>Proofreading</h1>
+      <p>A thorough final pass on surface errors: spelling, grammar, punctuation, citation compliance, and internal consistency. For manuscripts that are content-complete and ready to submit, pending a clean language check.</p>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <h4>What gets checked</h4>
+      <h2>Eight categories, nothing missed</h2>
+      <p>Proofreading at this level goes well beyond a grammar check. Citations get cross-referenced. Terminology gets checked for consistency across the full manuscript. Tables and figures get checked against every reference to them in the text.</p>
+      <div class="steps" style="margin-top:2rem">
+        <div class="step"><div class="step-num">1</div><div><h3>Spelling and typographic errors</h3><p>Misspellings, homophone confusion (affect/effect, principal/principle), inconsistent spelling of the same term across the manuscript, and OCR or paste artifacts from PDF imports.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h3>Grammar and syntax</h3><p>Subject-verb agreement, dangling and misplaced modifiers, incorrect verb tense and tense shifts within sections, article errors, run-on sentences, and comma splices. Ambiguous pronoun references are flagged as comments rather than silently changed.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h3>Punctuation</h3><p>Oxford comma consistency per your style guide, comma versus semicolon usage, colon and em dash spacing, quotation mark style, and hyphenation of compound modifiers.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div><h3>Capitalization</h3><p>Consistent capitalization of recurring terms, title case versus sentence case in headings, proper nouns, institutional names, and acronym first-use capitalization.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div><h3>Internal consistency</h3><p>Terminology used the same way throughout. Abbreviations introduced at first use and used consistently. Figures, tables, and footnotes numbered sequentially and correctly cross-referenced. Captions in consistent format.</p></div></div>
+        <div class="step"><div class="step-num">6</div><div><h3>Citations and references</h3><p>In-text citation format compliance per your declared style. Reference list format compliance: field order, punctuation, italics, DOI formatting. Cross-check of every in-text citation against the reference list for orphan and phantom entries, year mismatches, name inconsistencies, and duplicates.</p></div></div>
+        <div class="step"><div class="step-num">7</div><div><h3>Numbers and data</h3><p>Numeral versus word choice per your style guide, unit formatting, percentage symbol consistency, and verification of internal column totals and reported percentages in tables. Discrepancies are flagged as comments for your verification.</p></div></div>
+        <div class="step"><div class="step-num">8</div><div><h3>Formatting and layout</h3><p>Paragraph spacing and indentation consistency, section heading hierarchy and spacing, and abstract word count flagged if over the limit you specify.</p></div></div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <h4>Supported citation styles</h4>
+      <h2>All major academic styles</h2>
+      <p>Citation compliance checking requires a declared style. If your manuscript uses a style not listed here, get in touch before submitting.</p>
+      <div class="style-pills">
+        <span class="style-pill">APA 7th edition</span>
+        <span class="style-pill">Chicago 17 &mdash; Author-Date</span>
+        <span class="style-pill">Chicago 17 &mdash; Notes-Bibliography</span>
+        <span class="style-pill">MLA 9th edition</span>
+        <span class="style-pill">IEEE</span>
+        <span class="style-pill">Vancouver</span>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <h4>Delivery</h4>
+      <h2>Tracked changes in Word,<br>yours to accept or reject</h2>
+      <p>All corrections are returned as native Word tracked changes. You review each one individually and accept or reject it using the standard Word review tools, exactly as you would with any other tracked-change document.</p>
+      <ul class="checklist" style="margin-top:1.5rem">
+        <li>Clear-cut errors appear as tracked changes you accept or reject individually</li>
+        <li>Ambiguous cases, such as unclear pronoun references or citation mismatches requiring your verification, appear as comments explaining the issue and the suggested resolution</li>
+        <li>No changes are made silently: every correction is visible and reversible</li>
+        <li>Out-of-scope observations such as structural issues are noted briefly as comments and do not crowd out the language corrections</li>
+      </ul>
+      <div class="delivery-note">
+        <p><strong>Rate: &euro;0.025 per word. Rush rate: &euro;0.05 per word (48-hour turnaround).</strong> Proofreading a draft that is still changing wastes effort. Submit only when the content, structure, and argument are settled. If the manuscript still needs structural work, developmental editing should run first.</p>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <h4>New clients</h4>
+      <h2>First 1,000 words free</h2>
+      <p>If you have not worked with me before, send your manuscript and I will proofread the first 1,000 words at no charge. No commitment required. It is the fastest way to see the quality and depth of the work before you decide on a full project.</p>
+      <div class="scope-grid">
+        <div class="scope-box included">
+          <h4>In scope</h4>
+          <ul class="scope-list">
+            <li>Spelling, typography, and homophone errors</li>
+            <li>Grammar: agreement, modifiers, tense, articles</li>
+            <li>Punctuation per style guide</li>
+            <li>Capitalization consistency</li>
+            <li>Internal consistency across the full manuscript</li>
+            <li>Citation and reference format compliance</li>
+            <li>Cross-check of all in-text citations against reference list</li>
+            <li>Number and unit formatting</li>
+            <li>Table arithmetic verification</li>
+            <li>Formatting and layout consistency</li>
+          </ul>
+        </div>
+        <div class="scope-box">
+          <h4>Out of scope</h4>
+          <ul class="scope-list">
+            <li>Argument structure or section organization</li>
+            <li>Sentence-level rewriting for style or clarity</li>
+            <li>Paragraph flow or transitions</li>
+            <li>Thesis coherence or logic review</li>
+            <li>Methodological assessment</li>
+          </ul>
+          <p style="font-size:.82rem;margin-top:1rem;color:var(--ink-muted)">For structural and argument feedback, see developmental editing. The two services address different problems and complement each other.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="contact-block">
+        <h2>Submit your manuscript</h2>
+        <p>Share the manuscript, your required citation style, your language variant (US or UK English), and your deadline. I will confirm turnaround and rate before starting.</p>
+        <a class="contact-email" href="mailto:martin.s.petkov@gmail.com">martin.s.petkov@gmail.com</a>
+      </div>
+    </div>
+  </section>
+  <footer><div class="container">Academic Writing &amp; Editing Services &nbsp;&middot;&nbsp; martin.s.petkov@gmail.com</div></footer>
+</div>
+
+
+<!-- ABOUT -->
+<div id="page-about" class="page">
+  <section class="page-hero">
+    <div class="container">
+      <h4>About</h4>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="about-block">
+        <img class="about-photo" src="profile.png" alt="Martin Petkov">
+        <div>
+          <p>Martin Petkov has spent over 15 years writing and editing in academic and professional contexts. He has produced more than 3,600 pieces across formats: academic writing, technical reports, book-length research, and long-form business writing for international audiences in technology, finance, and management.</p>
+          <p>He is the author of a trilogy of books on artificial intelligence and the Metaverse, grounded in more than 1,200 academic sources spanning business strategy, organizational theory, and emerging technology. These services draw on that same standard of research rigour and precise, substantive writing applied to social science manuscripts at every stage of the writing and editing process.</p>
+          <div class="about-stat-row">
+            <div class="about-stat">
+              <span class="about-stat-num">15+</span>
+              <span class="about-stat-label">Years of academic &amp; business writing</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-num">3,600+</span>
+              <span class="about-stat-label">Published pieces across genres</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-num">1,200+</span>
+              <span class="about-stat-label">Academic sources, Metaverse trilogy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="contact-block">
+        <h2>Get in touch</h2>
+        <p>Send a brief note describing your project, where you are in the process, and your timeline. I will confirm the right service and provide a quote before anything begins.</p>
+        <a class="contact-email" href="mailto:martin.s.petkov@gmail.com">martin.s.petkov@gmail.com</a>
+      </div>
+    </div>
+  </section>
+  <footer><div class="container">MP Academic Services &nbsp;&middot;&nbsp; Social Sciences &nbsp;&middot;&nbsp; martin.s.petkov@gmail.com</div></footer>
+</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.getElementById('tab-' + id).classList.add('active');
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+</script>
+</body>
+</html>
